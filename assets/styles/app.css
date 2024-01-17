@@ -1,3 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
-    background-color: skyblue;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+
+}
+
+main {
+    padding: 25px;
+    flex: 1;
+}
+
+footer {
+
 }

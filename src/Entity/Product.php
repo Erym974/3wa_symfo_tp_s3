@@ -10,6 +10,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
+#[ORM\EntityListeners(['App\EntityListener\ProductListener'])]
 class Product
 {
     #[ORM\Id]
@@ -39,13 +40,17 @@ class Product
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: Order::class, orphanRemoval: true)]
     private Collection $orders;
 
+    #[ORM\Column(length: 75)]
+    private ?string $slug = null;
+
+    use DatesTrait;
+    
     public function __construct()
     {
         $this->orders = new ArrayCollection();
         $this->pictures = new ArrayCollection();
     }
 
-    use DatesTrait;
 
     public function getId(): ?int
     {
@@ -60,6 +65,18 @@ class Product
     public function setTitle(string $title): static
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

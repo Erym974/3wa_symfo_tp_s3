@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Trait\DatesTrait;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\EntityListeners(['App\EntityListener\CategoryListener'])]
 class Category
 {
     #[ORM\Id]
@@ -89,5 +90,10 @@ class Category
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getSlug();
     }
 }

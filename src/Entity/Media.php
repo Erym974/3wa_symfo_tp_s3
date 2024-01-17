@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
 #[Vich\Uploadable]
+#[ORM\EntityListeners(['App\EntityListener\MediaListener'])]
 class Media
 {
     #[ORM\Id]
