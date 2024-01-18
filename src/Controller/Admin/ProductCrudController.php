@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -28,6 +29,7 @@ class ProductCrudController extends AbstractCrudController
             MoneyField::new('price')
                 ->setCurrency('EUR')
                 ->setStoredAsCents(),
+            SlugField::new('slug')->setTargetFieldName('title'),
             DateTimeField::new('createdAt')->hideOnForm(),
             DateTimeField::new('updatedAt')->hideOnForm(),
         ];

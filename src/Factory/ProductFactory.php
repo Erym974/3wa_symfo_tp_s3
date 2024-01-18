@@ -46,12 +46,17 @@ final class ProductFactory extends ModelFactory
      */
     protected function getDefaults(): array
     {
+
+        $conditions = [Product::SCEALED, Product::NEW, Product::USED, Product::DAMAGED];
+
         return [
-            'category' => CategoryFactory::new(),
-            'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'price' => self::faker()->randomNumber(),
-            'state' => self::faker()->text(20),
             'title' => self::faker()->text(100),
+            'description' => self::faker()->text(300),
+            'category' => CategoryFactory::random(),
+            'author' => UserFactory::random(),
+            'price' => self::faker()->randomFloat(null, 499, 5999),
+            'condition' => $conditions[self::faker()->numberBetween(0, count($conditions) - 1)],
+            'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
             'updatedAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
         ];
     }

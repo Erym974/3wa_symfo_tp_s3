@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\Trait\DatesTrait;
 use App\Repository\OrderRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
@@ -12,10 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Order
 {
 
-    public const CART = 'CART';
     public const PENDING = 'PENDING';
     public const PAID = 'PAID';
-    public const CANCELLED = 'CANCELLED';
+    public const FAILED = 'FAILED';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -31,9 +31,21 @@ class Order
     private ?User $purchaser = null;
 
     #[ORM\Column(length: 20)]
-    private ?string $status = self::CART;
+    private ?string $status = self::PENDING;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $StripeReference = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $PaymentUrl = null;
 
     use DatesTrait;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
@@ -72,6 +84,30 @@ class Order
     public function setStatus(string $status): static
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getStripeReference(): ?string
+    {
+        return $this->StripeReference;
+    }
+
+    public function setStripeReference(string $StripeReference): static
+    {
+        $this->StripeReference = $StripeReference;
+
+        return $this;
+    }
+
+    public function getPaymentUrl(): ?string
+    {
+        return $this->PaymentUrl;
+    }
+
+    public function setPaymentUrl(?string $PaymentUrl): static
+    {
+        $this->PaymentUrl = $PaymentUrl;
 
         return $this;
     }

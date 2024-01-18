@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes favoris
+{% endblock %}
+
+{% block body %}
+
+	<h2 class="text-4xl font-extrabold px-16 py-4">Mes favoris</h2>
+
+	{% if favorites|length == 0 %}
+		<h5 class="text-xl font-bold px-16 py-4 text-gray-500">Aucun favoris</h5>
+	{% endif %}
+
+	<div class="flex-1 mt-8 lg:mx-12 lg:mt-0">
+		<div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3 ">
+
+			{% for product in favorites %}
+				{% include 'components/card.html.twig' with { product: product } %}
+			{% endfor %}
+
+		</div>
+	</div>
+{% endblock %}

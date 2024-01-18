@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[ORM\EntityListeners(['App\EntityListener\UserListener'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -50,10 +51,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Product::class, orphanRemoval: true)]
+    private Collection $products;
+
     public function __construct()
     {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
         $this->favorites = new ArrayCollection();
         $this->orders = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     use DatesTrait;
@@ -154,7 +161,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getAvatar(): string
     {
-        if($this->avatar == null) return "/uploads/default_picture.png";
+        if($this->avatar == null) return "default_picture.png";
         return $this->avatar;
     }
 
@@ -229,5 +236,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->isVerified = $isVerified;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): static
+    {
+        if (!$this->products->contains($product)) {
+            $this->products->add($product);
+            $product->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): static
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getAuthor() === $this) {
+                $product->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getFullname(): string
+    {
+        return $this->firstname . ' ' . $this->lastname;
     }
 }

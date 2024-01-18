@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\EntityListeners(['App\EntityListener\ProductListener'])]
 class Product
 {
+
+    public const SCEALED = "Jamais ouvert";
+    public const NEW = "Comme neuf";
+    public const USED = "Utilisé";
+    public const DAMAGED = "Abimé";
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -43,14 +49,25 @@ class Product
     #[ORM\Column(length: 75)]
     private ?string $slug = null;
 
+    #[ORM\ManyToOne(inversedBy: 'products')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?User $author = null;
+
+    #[ORM\Column]
+    private ?bool $deleted = false;
+
+    #[ORM\Column]
+    private ?bool $selled = false;
+
     use DatesTrait;
     
     public function __construct()
     {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
         $this->orders = new ArrayCollection();
         $this->pictures = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
@@ -152,6 +169,14 @@ class Product
      */
     public function getPictures(): Collection
     {
+        
+        // if is empty then create new Media 
+        if($this->pictures->isEmpty()) {
+            $media = new Media();
+            $media->setPath('not-found.jpg');
+            $this->pictures->add($media);
+        }
+
         return $this->pictures;
     }
 
@@ -179,6 +204,47 @@ class Product
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): static
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->slug;
+    }
+
+    public function isDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(?bool $deleted): static
+    {
+        $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    public function isSelled(): ?bool
+    {
+        return $this->selled;
+    }
+
+    public function setSelled(bool $selled): static
+    {
+        $this->selled = $selled;
 
         return $this;
     }

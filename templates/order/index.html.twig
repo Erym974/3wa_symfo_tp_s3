@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes commandes
+{% endblock %}
+
+{% block body %}
+
+	<h2 class="text-4xl font-extrabold px-16 py-4">Mes commandes en cours</h2>
+
+	<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+		<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+			<thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+				<tr>
+					<th scope="col" class="px-6 py-3">
+						Titre de l'annonce
+					</th>
+					<th scope="col" class="px-6 py-3">
+						Prix
+					</th>
+					<th scope="col" class="px-6 py-3">
+						Status
+					</th>
+					<th scope="col" class="px-6 py-3">
+						Action
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for order in orders  %}
+					<tr class="odd:bg-white even:bg-gray-50 border-b dark:border-gray-700">
+						<td class="px-6 py-4">
+							{{ order.product.title }}
+						</td>
+						<td class="px-6 py-4">
+							{{ order.product.price|price }}
+						</td>
+						<td class="px-6 py-4">
+							{% if order.status == "FAILED" %}
+								<span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Echoué</span>
+							{% elseif order.status == "PAID" %}
+								<span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Payé</span>
+							{% else %}
+								<span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">En attente</span>
+							{% endif %}
+						</td>
+						<td class="px-6 py-4 flex gap-x-2">
+							{% if order.status == "PENDING" %}
+								<a href="{{ order.paymentUrl }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+									Payer
+								</a>
+								<a href="{{ path('redirect.cancel.order', { 'id': order.id }) }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+									Annuler
+								</a>
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+				{% if orders|length == 0 %}
+					<tr>
+						<td colspan="4" class="px-6 py-4 text-center">
+							Vous n'avez aucune commande en cours
+						</td>
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}

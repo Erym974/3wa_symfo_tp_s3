@@ -28,6 +28,8 @@ class Category
 
     public function __construct()
     {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
         $this->products = new ArrayCollection();
     }
 
@@ -65,9 +67,12 @@ class Category
     /**
      * @return Collection<int, Product>
      */
-    public function getProducts(): Collection
+    public function getProducts(bool $all = false): Collection
     {
-        return $this->products;
+        if($all) return $this->products;
+        else return $this->products->filter(function (Product $product) {
+            return !$product->isDeleted() && !$product->isSelled();
+        });
     }
 
     public function addProduct(Product $product): static

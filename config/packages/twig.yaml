@@ -3,6 +3,7 @@ twig:
     default_path: '%kernel.project_dir%/templates'
     globals:
         site_name: '%site_name%'
+        products_path: '%products_path%'
 
 when@test:
     twig:

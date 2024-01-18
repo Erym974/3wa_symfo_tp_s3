@@ -49,9 +49,9 @@ final class UserFactory extends ModelFactory
     {
         return [
             'createdAt' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'email' => self::faker()->text(180),
-            'firstname' => self::faker()->text(50),
-            'isVerified' => self::faker()->boolean(),
+            'email' => self::faker()->email(),
+            'firstname' => self::faker()->firstName(),
+            'isVerified' => self::faker()->lastName(),
             'lastname' => self::faker()->text(50),
             'password' => self::faker()->text(),
             'roles' => [],

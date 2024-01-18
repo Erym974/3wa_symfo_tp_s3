@@ -26,14 +26,37 @@ class Media
 
     use DatesTrait;
 
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    public function setFile(?File $file = null): static
+    {
+        $this->file = $file;
+
+        if($file) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
     public function getPath(): ?string
     {
-        return $this->path;
+        if($this->path) return $this->path;
+        else return "";
     }
 
     public function setPath(string $path): static
