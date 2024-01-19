@@ -19,6 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ProductType extends AbstractType
 {
@@ -106,9 +107,16 @@ class ProductType extends AbstractType
                     'placeholder' => 'Prix',
                     'class' => "block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-500 border rounded-lg focus:border-blue-400 focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
                 ],
+                // 'error_bubbling' => true,
+                // 'invalid_message' => 'Merci de n\'entrer que des chiffres',
+                // 'invalid_message_parameters' => '%string%',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer un prix',
+                    ]),
+                    new Regex([
+                        'pattern' => '/^[0-9]+$/',
+                        'message' => 'Veuillez entrer un prix valide',
                     ]),
                 ],
             ])

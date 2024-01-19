@@ -8,13 +8,13 @@
 	<h2 class="text-4xl font-extrabold px-16 py-4">Publier une nouvelle annonce</h2>
 
 	{{ form_start(editForm) }}
+
 	<div class="w-full text-gray-700 mt-2">
 		<label class="block mb-2 text-sm font-medium text-gray-800" for="file_input">Rajouter plusieurs images</label>
 		{{ form_row(editForm.medias) }}
 		<p class="text-sm text-gray-500 mb-5" id="file_input_help">PNG, JPG, JPEG</p>
-
-
 	</div>
+	
 	<div class="w-full flex justify-center flex-col sm:flex-row gap-x-2 md:gap-x-4">
 		<div class="w-full">
 			{{ form_row(editForm.category, {
