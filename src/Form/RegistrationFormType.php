@@ -25,6 +25,11 @@ class RegistrationFormType extends AbstractType
                     'placeholder'=> 'Email',
                     'class' => "block w-full px-4 py-2 mt-2 text-gray-700  focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
                 ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner une adresse mail',
+                    ])
+                ]
             ])
             ->add('firstname', TextType::class, [
                 'label' => false,
@@ -32,12 +37,22 @@ class RegistrationFormType extends AbstractType
                     'placeholder'=> 'Prénom',
                     'class' => "block w-full px-4 py-2 mt-2 text-gray-700  focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
                 ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner un prénom',
+                    ])
+                ],
             ])
             ->add('lastname', TextType::class, [
                 'label' => false,
                 'attr' => [
                     'placeholder'=> 'Nom',
                     'class' => "block w-full px-4 py-2 mt-2 text-gray-700  focus:ring-opacity-40 focus:outline-none focus:ring focus:ring-blue-300"
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Merci de renseigner un nom',
+                    ])
                 ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
