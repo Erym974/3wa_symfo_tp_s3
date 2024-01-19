@@ -28,9 +28,9 @@ class UserController extends AbstractController
     public function show(User $user, EntityManagerInterface $manager, Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {
 
-        // get products of user selled thank to Order Entity with status paid
+        // get products of user sold thank to Order Entity with status paid
         $selled = $user->getProducts()->filter(function (Product $product) {
-            return $product->isSelled();
+            return $product->isSold();
         });
 
         $edit = $request->query->get('edit') == "1" ? true : false;

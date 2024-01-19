@@ -237,14 +237,14 @@ class Product
         return $this;
     }
 
-    public function isSelled(): ?bool
+    public function isSold(): ?bool
     {
         return $this->selled;
     }
 
-    public function setSelled(bool $selled): static
+    public function setSold(bool $sold): static
     {
-        $this->selled = $selled;
+        $this->selled = $sold;
 
         return $this;
     }

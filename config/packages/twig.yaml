@@ -4,6 +4,7 @@ twig:
     globals:
         site_name: '%site_name%'
         products_path: '%products_path%'
+        logo_path: '%logo_path%'
 
 when@test:
     twig:

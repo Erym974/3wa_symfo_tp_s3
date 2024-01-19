@@ -5,4 +5,19 @@
 
 {% block body %}
 
+	<h2 class="text-4xl font-extrabold mb-5">Les nouvelles annonces</h2>
+
+	{% for category in categories %}
+		<h3 class="text-3xl font-bold my-3 ps-8">{{ category.title }}</h3>
+		<div class="flex-1 mt-8 lg:mx-12 lg:mt-0">
+			<div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3 ">
+				{% for i in 0..4 %}
+					{% if category.products[i] is defined %}
+						{% include 'components/card.html.twig' with { 'product': category.products[i] } %}
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	{% endfor %}
+
 {% endblock %}

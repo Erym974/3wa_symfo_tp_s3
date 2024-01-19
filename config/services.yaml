@@ -6,6 +6,7 @@
 parameters:
     site_name: "Projet Manhattan"
     products_path: 'uploads/medias'
+    logo_path: '/logo.png'
 
 services:
     # default configuration for services in *this* file

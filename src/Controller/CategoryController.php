@@ -21,15 +21,6 @@ class CategoryController extends AbstractController
     {
         
     }
-
-    // #[Route('/categories', name: 'category.index')]
-    // public function index() : Response
-    // {
-    //     return $this->render('category/index.html.twig', [
-    //         'categories' => $this->manager->getRepository(Category::class)->findAll(),
-    //     ]);
-    // }
-
     
 
     #[Route('/categories/{category?}', name: 'app.categories')]
@@ -101,6 +92,31 @@ class CategoryController extends AbstractController
             'current_category' => $category,
             'product' => $product,
             'editForm' => $editForm ? $editForm->createView() : null,
+        ]);
+    }
+
+    // Non utilisé
+    #[Route('/categories/{category}/{product}/delete', name: 'app.categories.product.delete')]
+    public function delete(#[MapEntity(mapping: ['category' => 'slug'])] Category $category, #[MapEntity(mapping: ['product' => 'slug'])] Product $product): Response
+    {
+
+        /** @var User */
+        $user = $this->getUser();
+
+        if($product->getCategory() !== $category) {
+            return $this->redirectToRoute('app.categories.product', [
+                'category' => $product->getCategory(),
+                'product' => $product
+            ]);
+        }
+
+        if($user == $product->getAuthor()) {
+            $this->manager->remove($product);
+            $this->manager->flush();
+        }
+
+        return $this->redirectToRoute('app.categories', [
+            'category' => $category
         ]);
     }
 

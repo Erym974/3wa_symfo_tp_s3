@@ -25,8 +25,8 @@
 				<div class="container px-6 py-4 mx-auto">
 					<div class="lg:flex lg:items-center">
 						<div class="flex items-center justify-between">
-							<a href="#">
-								<img class="w-auto h-6 sm:h-7" src="https://merakiui.com/images/full-logo.svg" alt="">
+							<a href="{{ path('home.index') }}">
+								<img class="w-auto h-8 sm:h-7" src="{{ logo_path }}" alt="Logo du projet Manhattan">
 							</a>
 
 							<!-- Mobile menu button -->
@@ -45,8 +45,8 @@
 
 						<div x-cloak :class="[isOpen ? 'translate-x-0 opacity-100 ' : 'opacity-0 -translate-x-full']" class="absolute inset-x-0 z-20 flex-1 w-full px-6 py-4 transition-all duration-300 ease-in-out bg-white bg-gray-800 lg:mt-0 lg:p-0 lg:top-0 lg:relative lg:bg-transparent lg:w-auto lg:opacity-100 lg:translate-x-0 lg:flex lg:items-center lg:justify-between">
 							<div class="flex flex-col capitalize text-gray-300 lg:flex lg:px-16 lg:-mx-4 lg:flex-row lg:items-center">
-								<a href="{{ path('home.index') }}" class="px-2.5 py-2 transition-colors duration-300 transform rounded-lg text-gray-200 hover:bg-gray-100 hover:bg-gray-700 md:mx-2">Accueil</a>
-								<a href="{{ path('app.categories') }}" class="px-2.5 py-2 transition-colors duration-300 transform rounded-lg text-gray-200 hover:bg-gray-100 hover:bg-gray-700 md:mx-2">Catégories</a>
+								<a href="{{ path('home.index') }}" class="px-2.5 py-2 transition-colors duration-300 transform rounded-lg text-gray-200 hover:bg-gray-700 md:mx-2">Accueil</a>
+								<a href="{{ path('app.categories') }}" class="px-2.5 py-2 transition-colors duration-300 transform rounded-lg text-gray-200 hover:bg-gray-700 md:mx-2">Catégories</a>
 
 
 								<div class="relative mt-4 lg:mt-0 lg:mx-4">
@@ -125,8 +125,8 @@
 
 			<footer class="bg-gray-900">
 				<div class="container flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row">
-					<a href="#">
-						<img class="w-auto h-7" src="https://merakiui.com/images/full-logo.svg" alt="">
+					<a href="{{ path('home.index') }}">
+						<img class="w-auto h-7" src="{{ logo_path }}" alt="Logo du projet Manhattan">
 					</a>
 
 					<p class="text-sm text-gray-600 text-gray-300">© Copyright 2021. All Rights Reserved.</p>

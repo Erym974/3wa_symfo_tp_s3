@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CategoryController!
+{% block title %}Categories
 {% endblock %}
 
 {% block body %}
@@ -11,7 +11,7 @@
 
 			{% if app.user %}
 				<div class="flex justify-end">
-				<a href="{{ path('app_new_ad') }}" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
+				<a href="{{ path('app_new_ad') }}" class="text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 border-gray-700">
 					<i class="fa-solid fa-plus"></i>
 					Créer une nouvelle annonce
 				</a>
@@ -23,9 +23,9 @@
 					<div class="sticky top-10 bg-gray-800 rounded-lg px-12 py-6">
 						<h1 class="text-xl font-semibold text-white">Catégories</h1>
 
-						<div class="mt-4 space-y-4 lg:mt-8">
+						<div class="mt-4 space-y-2 lg:mt-8">
 							{% for category in categories %}
-								<a href="{{ path('app.categories', { 'category': category }) }}" class="block text-blue-400 hover:underline {% if category.id == current_category.id %} underline font-bold {% endif %}">{{ category.title }}</a>
+								<a href="{{ path('app.categories', { 'category': category }) }}" class="block text-blue-400 hover:underline transition-colors duration-300 transform hover:bg-gray-100 hover:bg-gray-700 rounded-xl p-2 {% if category.id == current_category.id %} text-blue-300 font-bold italic bg-gray-900 {% endif %}">{{ category.title }}</a>
 							{% endfor %}
 						</div>
 					</div>

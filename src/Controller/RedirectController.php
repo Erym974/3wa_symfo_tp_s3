@@ -111,7 +111,7 @@ class RedirectController extends AbstractController
                 $order->setStatus(Order::PAID);
 
                 $product = $order->getProduct();
-                $product->setSelled(true);
+                $product->setSold(true);
 
                 $this->manager->persist($product);
 
@@ -138,11 +138,17 @@ class RedirectController extends AbstractController
         $user = $this->getUser();
 
         if ($product->getAuthor() == $user || $this->isGranted('ROLE_MANAGER')) {
+
+            $media->setFile(null);
+            $media->setPath(null);
+
             $this->manager->remove($media);
             $this->manager->flush();
         }
 
         $referer = $request->headers->get('referer');
+
+
         return $this->redirect($referer);
     }
 }

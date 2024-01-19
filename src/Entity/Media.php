@@ -32,6 +32,22 @@ class Media
         $this->updatedAt = new \DateTimeImmutable();
     }
 
+    /** @see \Serializable::serialize() */
+    public function __serialize()
+    {
+        return [
+            "id" => $this->id,
+            "path" => $this->path
+        ];
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function __unserialize($serialized)
+    {
+        $this->id = $serialized['id'];
+        $this->path = $serialized['path'];
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -55,11 +71,10 @@ class Media
 
     public function getPath(): ?string
     {
-        if($this->path) return $this->path;
-        else return "";
+        return $this->path;
     }
 
-    public function setPath(string $path): static
+    public function setPath(?string $path): static
     {
         $this->path = $path;
 

@@ -71,7 +71,7 @@ class Category
     {
         if($all) return $this->products;
         else return $this->products->filter(function (Product $product) {
-            return !$product->isDeleted() && !$product->isSelled();
+            return !$product->isDeleted() && !$product->isSold();
         });
     }
 
